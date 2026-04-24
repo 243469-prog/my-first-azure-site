@@ -1,69 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hasnat's Azure Site</title>
-    <style>
-        body {
-            background-color: #0b0e14; /* Deep dark background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hasnat Ahmed</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --fire:   #ff4500;
+      --gold:   #ffd700;
+      --orange: #ff8c00;
+      --red:    #cc1100;
+      --white:  #f5f0e8;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body {
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+      background: #0a0a0a;
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--white);
+    }
 
-        .aura-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            color: white;
-            /* The "Aura" Glow */
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2), 0 0 60px rgba(121, 40, 202, 0.2);
-            transition: transform 0.3s ease;
-        }
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-        .aura-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 80px rgba(121, 40, 202, 0.4);
-        }
+    /* Real Mustang photo BG */
+    .bg-photo {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/1969_Ford_Mustang_Mach_1_%2814013862842%29.jpg/1280px-1969_Ford_Mustang_Mach_1_%2814013862842%29.jpg');
+      background-size: cover;
+      background-position: center 60%;
+      background-repeat: no-repeat;
+      z-index: 0;
+      animation: slowZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes slowZoom {
+      from { transform: scale(1.03) translateX(0); }
+      to   { transform: scale(1.09) translateX(-1.5%); }
+    }
 
-       h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    background: linear-gradient(90deg, #00d4ff, #7928ca);
-    background-clip: text; /* Standard property */
-    -webkit-background-clip: text; /* Required for Chrome/Edge/Safari */
-    -webkit-text-fill-color: transparent;
-    color: transparent; /* Fallback */
-}
+    /* Dark cinematic overlays */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(to bottom,
+          rgba(4,1,0,.88)  0%,
+          rgba(8,3,0,.48)  28%,
+          rgba(6,2,0,.30)  52%,
+          rgba(4,1,0,.68)  78%,
+          rgba(0,0,0,.96) 100%),
+        radial-gradient(ellipse 100% 55% at 50% 55%, rgba(255,80,0,.07) 0%, transparent 65%);
+    }
+    .vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: radial-gradient(ellipse 75% 75% at 50% 50%, transparent 25%, rgba(0,0,0,.6) 100%);
+      pointer-events: none;
+    }
+    .grain {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      opacity: .04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 160px;
+      pointer-events: none;
+    }
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 3px, rgba(0,0,0,.06) 3px, rgba(0,0,0,.06) 4px);
+      pointer-events: none;
+    }
 
-        p {
-            color: #ccc;
-            margin: 10px 0;
-            font-size: 1.1rem;
-        }
+    /* Glow orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: 2;
+      pointer-events: none;
+      animation: orbPulse 6s ease-in-out infinite;
+    }
+    .orb-bot { width:90vw; height:30vh; bottom:0; left:5%; background:radial-gradient(circle,rgba(255,55,0,.16) 0%,transparent 70%); }
+    .orb-mid { width:45vw; height:45vw; bottom:10%; right:-8%; background:radial-gradient(circle,rgba(255,140,0,.07) 0%,transparent 70%); animation-delay:-3s; }
+    @keyframes orbPulse { 0%,100%{opacity:.7;} 50%{opacity:1;} }
 
-        .label {
-            font-weight: bold;
-            color: #00d4ff;
-        }
-    </style>
+    /* Fire particles */
+    .particles { position:absolute; inset:0; z-index:4; pointer-events:none; overflow:hidden; }
+    .particle  { position:absolute; border-radius:50%; animation:floatUp linear infinite; }
+    @keyframes floatUp {
+      0%   { transform:translateY(0) translateX(0) scale(1); opacity:.65; }
+      100% { transform:translateY(-100vh) translateX(var(--dx)) scale(0); opacity:0; }
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position:relative; z-index:10; width:100%;
+      padding: clamp(14px,2.5vw,24px) clamp(18px,5vw,56px);
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid rgba(255,140,0,.13);
+      background:rgba(0,0,0,.28); backdrop-filter:blur(10px);
+    }
+    .top-logo {
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(9px,1.5vw,12px);
+      letter-spacing:.24em; color:rgba(255,215,0,.45); text-transform:uppercase;
+    }
+    .top-badge {
+      display:flex; align-items:center; gap:8px;
+      font-family:'Orbitron',sans-serif;
+      font-size:clamp(8px,1.3vw,11px);
+      letter-spacing:.18em; color:var(--orange); text-transform:uppercase;
+    }
+    .dot { width:7px; height:7px; border-radius:50%; background:var(--fire); box-shadow:0 0 8px var(--fire); animation:blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:.1;} }
+
+    /* ── CONTENT ── */
+    .content {
+      position:relative; z-index:10; flex:1;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      padding: clamp(28px,5vw,56px) clamp(18px,5vw,36px);
+      text-align:center; width:100%;
+    }
+
+    /* Eyeline */
+    .eyeline { display:flex; align-items:center; gap:14px; margin-bottom:clamp(14px,2.5vw,24px); animation:fadeUp .8s .1s both; width:clamp(240px,60vw,600px); }
+    .el-line  { flex:1; height:1px; background:linear-gradient(90deg,transparent,rgba(255,140,0,.5)); }
+    .el-line.r{ background:linear-gradient(90deg,rgba(255,140,0,.5),transparent); }
+    .el-label { font-family:'Orbitron',sans-serif; font-size:clamp(8px,1.2vw,10px); letter-spacing:.28em; color:var(--orange); text-transform:uppercase; white-space:nowrap; }
+
+    /* Name */
+    .name-wrap { animation:fadeUp .8s .2s both; }
+    .name {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(56px,15vw,155px);
+      line-height:.9; letter-spacing:.06em;
+      background:linear-gradient(148deg, #fff8ee 0%, var(--gold) 28%, var(--orange) 55%, var(--red) 78%, #440000 100%);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      filter:drop-shadow(0 2px 42px rgba(255,100,0,.42));
+    }
+
+    /* Subtitle */
+    .subtitle {
+      margin-top:clamp(8px,1.5vw,14px);
+      font-family:'Rajdhani',sans-serif; font-size:clamp(12px,2.2vw,19px); font-weight:700;
+      letter-spacing:.35em; text-transform:uppercase; color:rgba(255,255,255,.45);
+      animation:fadeUp .8s .34s both;
+    }
+
+    /* Divider */
+    .divider { display:flex; align-items:center; gap:10px; margin:clamp(16px,3vw,28px) auto; width:clamp(200px,50vw,500px); animation:fadeUp .8s .44s both; }
+    .d-line   { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--orange),var(--gold)); }
+    .d-line.r { background:linear-gradient(90deg,var(--gold),var(--orange),transparent); }
+    .d-icon   { font-size:clamp(18px,3vw,26px); filter:drop-shadow(0 0 8px var(--gold)); }
+
+    /* Stats */
+    .stats { display:flex; flex-wrap:wrap; justify-content:center; gap:clamp(8px,1.8vw,16px); animation:fadeUp .8s .54s both; }
+    .stat {
+      position:relative;
+      display:flex; flex-direction:column; align-items:center; gap:5px;
+      padding:clamp(12px,2vw,18px) clamp(18px,3.2vw,34px);
+      background:rgba(0,0,0,.5);
+      border:1px solid rgba(255,140,0,.2);
+      backdrop-filter:blur(16px);
+      border-radius:3px;
+      min-width:clamp(110px,19vw,172px);
+      transition:border-color .3s,background .3s,transform .3s;
+      overflow:hidden;
+    }
+    .stat::after { content:''; position:absolute; top:0; left:0; width:14px; height:14px; border-top:1.5px solid var(--gold); border-left:1.5px solid var(--gold); }
+    .stat:hover  { border-color:rgba(255,190,0,.5); background:rgba(255,55,0,.1); transform:translateY(-4px); }
+    .stat-label  { font-family:'Orbitron',sans-serif; font-size:clamp(7px,1.1vw,9px); letter-spacing:.22em; color:var(--orange); text-transform:uppercase; }
+    .stat-value  { font-family:'Rajdhani',sans-serif; font-size:clamp(14px,2.4vw,19px); font-weight:700; color:var(--white); letter-spacing:.06em; }
+
+    /* Year */
+    .year-wrap { margin-top:clamp(20px,4vw,38px); display:flex; align-items:center; gap:12px; animation:fadeUp .8s .68s both; }
+    .yr-lbl  { font-family:'Orbitron',sans-serif; font-size:clamp(7px,1.1vw,9px); letter-spacing:.26em; color:rgba(255,215,0,.28); text-transform:uppercase; }
+    .yr-num  { font-family:'Bebas Neue',sans-serif; font-size:clamp(30px,6.5vw,56px); letter-spacing:.12em; color:rgba(255,215,0,.16); line-height:1; }
+
+    /* ── BOTTOM BAR ── */
+    .bottom-bar {
+      position:relative; z-index:10; width:100%;
+      padding:clamp(10px,1.8vw,16px) clamp(18px,5vw,56px);
+      display:flex; justify-content:center; align-items:center; gap:10px; flex-wrap:wrap;
+      border-top:1px solid rgba(255,140,0,.1);
+      background:rgba(0,0,0,.32); backdrop-filter:blur(10px);
+    }
+    .bottom-bar span { font-family:'Orbitron',sans-serif; font-size:clamp(7px,.9vw,9px); letter-spacing:.2em; color:rgba(255,255,255,.18); text-transform:uppercase; }
+    .bottom-bar .sep { color:rgba(255,140,0,.3); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(22px);} to{opacity:1;transform:translateY(0);} }
+
+    /* ── Responsive ── */
+    @media(max-width:520px){ .stat{min-width:calc(50% - 8px);} .top-logo{display:none;} }
+    @media(max-width:360px){ .stat{min-width:100%;} }
+  </style>
 </head>
 <body>
+<div class="hero">
 
-    <div class="aura-card">
-        <h1>Hasnat Ahmed</h1>
-        <p><span class="label">City:</span> Islamabad</p>
-        <p><span class="label">University:</span> Air University</p>
-        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 20px 0;">
-        <p style="font-size: 0.8rem; opacity: 0.6;">Deployed via Azure Static Web Apps</p>
+  <div class="bg-photo"></div>
+  <div class="overlay"></div>
+  <div class="vignette"></div>
+  <div class="grain"></div>
+  <div class="scanlines"></div>
+  <div class="orb orb-bot"></div>
+  <div class="orb orb-mid"></div>
+  <div class="particles" id="particles"></div>
+
+  <!-- Top bar -->
+  <div class="top-bar">
+    <div class="top-logo">Islamabad &nbsp;·&nbsp; Pakistan</div>
+    <div class="top-badge"><span class="dot"></span>1969 Ford Mustang Mach 1</div>
+  </div>
+
+  <!-- Main -->
+  <div class="content">
+    <div class="eyeline">
+      <div class="el-line"></div>
+      <div class="el-label">AIR University</div>
+      <div class="el-line r"></div>
     </div>
 
+    <div class="name-wrap">
+      <div class="name">Hasnat<br>Ahmed</div>
+    </div>
+
+    <div class="subtitle">Student &nbsp;·&nbsp; Islamabad</div>
+
+    <div class="divider">
+      <div class="d-line"></div>
+      <div class="d-icon">🔥</div>
+      <div class="d-line r"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-label">University</span>
+        <span class="stat-value">AIR University</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">City</span>
+        <span class="stat-value">Islamabad</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">Ride</span>
+        <span class="stat-value">Ford Mustang</span>
+      </div>
+    </div>
+
+    <div class="year-wrap">
+      <span class="yr-lbl">Since</span>
+      <span class="yr-num">1969</span>
+      <span class="yr-lbl">Legendary</span>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <span>Built Different</span>
+    <span class="sep">·</span>
+    <span>Drive Legendary</span>
+    <span class="sep">·</span>
+    <span>Hasnat Ahmed</span>
+  </div>
+
+</div>
+
+<script>
+  const el = document.getElementById('particles');
+  const cols = ['#ff4500','#ff8c00','#ffd700','#ff3300','#ffaa00'];
+  for (let i = 0; i < 38; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const sz = Math.random() * 5 + 1.5;
+    const dx = (Math.random() - .5) * 180;
+    const dur = 5 + Math.random() * 8;
+    p.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      left:${4 + Math.random() * 92}%;
+      bottom:${Math.random() * 35}%;
+      background:${cols[Math.floor(Math.random()*cols.length)]};
+      --dx:${dx}px;
+      animation-duration:${dur}s;
+      animation-delay:-${Math.random()*dur}s;
+      filter:blur(${Math.random()>.5?1:0}px);
+    `;
+    el.appendChild(p);
+  }
+</script>
 </body>
 </html>
